@@ -1,7 +1,7 @@
 {
   "name": "stock-checker",
   "version": "1.0.0",
-  "description": "Basic stock checker via web scraping",
+  "description": "Quick stock check via playwright",
   "main": "index.js",
   "type": "module",
   "scripts": {

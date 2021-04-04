@@ -35,16 +35,14 @@ export default {
         url: 'https://www.amazon.com/EVGA-10G-P5-3885-KR-GeForce-Cooling-Backplate/dp/B08HR55YB5'
       },
       {
-        name: 'Nintendo Switch Pro Controller',
-        url: 'https://www.amazon.com/Nintendo-Switch-Pro-Controller/dp/B01NAWKYZ0'
+        name: '3070 Asus OC',
+        url: 'https://www.amazon.ca/Graphics-DisplayPort-Axial-tech-Protective-Backplate/dp/B08L8LG4M3'
       },
       {
-        name: 'max\'s llama shirt',
-        url: 'https://www.amazon.ca/Goodie-Two-Sleeves-Llamacorn-Sublimated/dp/B01N64FCRE'
-      }
+        name: 'Nintendo Switch Pro Controller',
+        url: 'https://www.amazon.com/Nintendo-Switch-Pro-Controller/dp/B01NAWKYZ0',
+        note: 'control item, should be in stock'
+      },
     ]
-  },
-  bestbuy: {
-
   }
 };
