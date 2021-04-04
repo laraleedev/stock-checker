@@ -1,0 +1,28 @@
+{
+  "name": "stock-checker",
+  "version": "1.0.0",
+  "description": "Basic stock checker via web scraping",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "lint": "npx semistandard",
+    "lint_fix": "npx semistandard --fix",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laraleedev/stock-checker.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laraleedev/stock-checker/issues"
+  },
+  "homepage": "https://github.com/laraleedev/stock-checker#readme",
+  "dependencies": {
+    "playwright": "^1.10.0"
+  },
+  "devDependencies": {
+    "semistandard": "^16.0.0"
+  }
+}
