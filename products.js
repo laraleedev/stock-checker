@@ -42,7 +42,7 @@ export default {
         name: 'Nintendo Switch Pro Controller',
         url: 'https://www.amazon.com/Nintendo-Switch-Pro-Controller/dp/B01NAWKYZ0',
         note: 'control item, should be in stock'
-      },
+      }
     ]
   }
 };

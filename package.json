@@ -2,12 +2,12 @@
   "name": "stock-checker",
   "version": "1.0.0",
   "description": "Quick stock check via playwright",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "lint": "npx semistandard",
     "lint_fix": "npx semistandard --fix",
-    "start": "node index.js"
+    "start": "nf start"
   },
   "repository": {
     "type": "git",
@@ -19,10 +19,17 @@
     "url": "https://github.com/laraleedev/stock-checker/issues"
   },
   "homepage": "https://github.com/laraleedev/stock-checker#readme",
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
-    "playwright": "^1.10.0"
+    "bull": "^3.22.0",
+    "express": "^4.17.1",
+    "playwright": "^1.10.0",
+    "throng": "^5.0.0"
   },
   "devDependencies": {
+    "foreman": "^3.0.1",
     "semistandard": "^16.0.0"
   }
 }
