@@ -22,6 +22,7 @@
 
 import throng from 'throng';
 import Queue from 'bull';
+import playwright from 'playwright';
 
 // Connect to a local redis instance locally, and the Heroku-provided URL in production
 const REDIS_URL = process.env.HEROKU_REDIS_PINK_URL || "redis://127.0.0.1:6379";
@@ -45,24 +46,42 @@ function start() {
   const workQueue = new Queue('work', REDIS_URL);
 
   workQueue.process(maxJobsPerWorker, async (job) => {
-    // This is an example job that just slowly reports on progress
-    // while doing no work. Replace this with your own job logic.
-    let progress = 0;
+    // // This is an example job that just slowly reports on progress
+    // // while doing no work. Replace this with your own job logic.
+    // let progress = 0;
 
-    // throw an error 5% of the time
-    if (Math.random() < 0.05) {
-      throw new Error("This job failed!")
-    }
+    // // throw an error 5% of the time
+    // if (Math.random() < 0.05) {
+    //   throw new Error("This job failed!")
+    // }
 
-    while (progress < 100) {
-      await sleep(50);
-      progress += 1;
-      job.progress(progress)
-    }
+    // while (progress < 100) {
+    //   await sleep(50);
+    //   progress += 1;
+    //   job.progress(progress)
+    // }
 
-    // A job can return values that will be stored in Redis as JSON
-    // This return value is unused in this demo application.
-    return { value: "This will be stored" };
+    // // A job can return values that will be stored in Redis as JSON
+    // // This return value is unused in this demo application.
+    // return { value: "This will be stored" };
+
+    let inStock;
+
+
+    const browser = await playwright.chromium.launch();
+    const page = await browser.newPage();
+
+    await page.goto(job.data.url);
+
+    inStock = await page.$("#add-to-cart-button");
+
+    await browser.close();
+
+
+    job.progress(100);
+    job.moveToCompleted(inStock);
+
+    // return { value: inStock };
   });
 }
 
