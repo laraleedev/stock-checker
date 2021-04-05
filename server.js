@@ -1,15 +1,21 @@
 import express from 'express';
 import Queue from 'bull';
+import path from 'path';
+import url from 'url';
+
+// ES module workaround: https://stackoverflow.com/a/62892482
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Serve on PORT on Heroku and on localhost:5000 locally
-let PORT = process.env.PORT || '5000';
+const PORT = process.env.PORT || '5000';
 // Connect to a local redis intance locally, and the Heroku-provided URL in production
-let REDIS_URL = process.env.HEROKU_REDIS_PINK_URL || 'redis://127.0.0.1:6379';
+const REDIS_URL = process.env.HEROKU_REDIS_PINK_URL || 'redis://127.0.0.1:6379';
 
-let app = express();
+const app = express();
 
 // Create / Connect to a named work queue
-let workQueue = new Queue('work', REDIS_URL);
+const workQueue = new Queue('work', REDIS_URL);
 
 // // Sanity check
 // app.get('/', (req, res) => res.send('Hello World!'));
