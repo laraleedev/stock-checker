@@ -3,6 +3,11 @@
         "heroku-redis"
     ],
     "buildpacks": [
-        { "url": "https://github.com/mxschmitt/heroku-playwright-buildpack.git" }
+        {
+            "url": "https://github.com/mxschmitt/heroku-playwright-buildpack.git"
+        },
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+        }
     ]
 }
