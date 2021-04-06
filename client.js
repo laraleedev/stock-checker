@@ -2,19 +2,19 @@
 let jobs = {};
 
 // Kick off a new job by POST-ing to the server
-async function addJob() {
-  let res = await fetch('job/', {method: 'POST'});
-  let job = await res.json();
-  jobs[job.id] = {id: job.id, state: "queued"};
+async function addJob () {
+  const res = await fetch('job/', { method: 'POST' });
+  const job = await res.json();
+  jobs[job.id] = { id: job.id, state: 'queued' };
   render();
 }
 
 // Fetch updates for each job
-async function updateJobs() {
-  for (let id of Object.keys(jobs)) {
-    let res = await fetch(`/job/${id}`);
-    let result = await res.json();
-    if (!!jobs[id]) {
+async function updateJobs () {
+  for (const id of Object.keys(jobs)) {
+    const res = await fetch(`/job/${id}`);
+    const result = await res.json();
+    if (jobs[id]) {
       jobs[id] = result;
     }
     render();
@@ -22,37 +22,37 @@ async function updateJobs() {
 }
 
 // Delete all stored jobs
-function clear() {
+function clear () {
   jobs = {};
   render();
 }
 
 // Update the UI
-function render() {
-  let s = "";
-  for (let id of Object.keys(jobs)) {
+function render () {
+  let s = '';
+  for (const id of Object.keys(jobs)) {
     s += renderJob(jobs[id]);
   }
 
   // For demo simplicity this blows away all of the existing HTML and replaces it,
   // which is very inefficient. In a production app a library like React or Vue should
   // handle this work
-  document.querySelector("#job-summary").innerHTML = s;
+  document.querySelector('#job-summary').innerHTML = s;
 }
 
 // Renders the HTML for each job object
-function renderJob(job) {
+function renderJob (job) {
   let progress = job.progress || 0;
-  let color = "bg-light-purple";
+  let color = 'bg-light-purple';
 
-  if (job.state === "completed") {
-    color = "bg-purple";
+  if (job.state === 'completed') {
+    color = 'bg-purple';
     progress = 100;
-  } else if (job.state === "failed") {
-    color = "bg-dark-red";
+  } else if (job.state === 'failed') {
+    color = 'bg-dark-red';
     progress = 100;
   }
-  
+
   return document.querySelector('#job-template')
     .innerHTML
     .replace('{{id}}', job.id)
@@ -62,9 +62,9 @@ function renderJob(job) {
 }
 
 // Attach click handlers and kick off background processes
-window.onload = function() {
-  document.querySelector("#add-job").addEventListener("click", addJob);
-  document.querySelector("#clear").addEventListener("click", clear);
+window.onload = function () {
+  document.querySelector('#add-job').addEventListener('click', addJob);
+  document.querySelector('#clear').addEventListener('click', clear);
 
   setInterval(updateJobs, 200);
 };
