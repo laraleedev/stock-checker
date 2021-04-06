@@ -65,11 +65,11 @@ async function addJob (data) {
       'Content-Type': 'application/json'
     },
     // body: JSON.stringify(data)
-    body: JSON.stringify(    {
+    body: JSON.stringify({
       name: '3070 Asus OC',
       selector: '#add-to-cart-button',
       url: 'https://www.amazon.ca/Graphics-DisplayPort-Axial-tech-Protective-Backplate/dp/B08L8LG4M3'
-    },)
+    })
   });
   const job = await res.json();
   jobs[job.id] = { id: job.id, state: 'queued' };

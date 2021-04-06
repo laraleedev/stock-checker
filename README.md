@@ -27,3 +27,4 @@ https://floating-scrubland-88014.herokuapp.com
 - https://devcenter.heroku.com/articles/getting-started-with-nodejs
 - https://devcenter.heroku.com/articles/node-redis-workers
 - https://medium.com/@RedisLabs/windows-subsystem-for-linux-wsl-10e3ca4d434e
+- https://elements.heroku.com/buildpacks/mxschmitt/heroku-playwright-buildpack
