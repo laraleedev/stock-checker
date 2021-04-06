@@ -24,7 +24,7 @@
   "dependencies": {
     "bull": "^3.22.0",
     "express": "^4.17.1",
-    "playwright": "^1.10.0",
+    "playwright-chromium": "^1.9.0",
     "throng": "^5.0.0"
   },
   "devDependencies": {
