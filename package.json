@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Quick stock check via playwright",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "lint": "npx semistandard",
     "lint_fix": "npx semistandard --fix",

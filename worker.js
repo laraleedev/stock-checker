@@ -1,6 +1,6 @@
-import throng from 'throng';
-import Queue from 'bull';
-import playwright from 'playwright';
+const throng = require('throng');
+const Queue = require('bull');
+const playwright = require('playwright');
 
 // Connect to a local redis instance locally, and the Heroku-provided URL in production
 const REDIS_URL = process.env.HEROKU_REDIS_PINK_URL || 'redis://127.0.0.1:6379';
@@ -15,47 +15,22 @@ const workers = process.env.WEB_CONCURRENCY || 2;
 // to be much lower.
 const maxJobsPerWorker = 50;
 
-function sleep (ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function start () {
-  // Connect to the named work queue
-  const workQueue = new Queue('work', REDIS_URL);
+  const workQueue = new Queue('work', REDIS_URL, { settings: { lockDuration: 30000 } });   // Connect to the named work queue
 
   workQueue.process(maxJobsPerWorker, async (job) => {
-    // // This is an example job that just slowly reports on progress
-    // // while doing no work. Replace this with your own job logic.
-    // let progress = 0;
-
-    // // throw an error 5% of the time
-    // if (Math.random() < 0.05) {
-    //   throw new Error("This job failed!")
-    // }
-
-    // while (progress < 100) {
-    //   await sleep(50);
-    //   progress += 1;
-    //   job.progress(progress)
-    // }
-
-    // // A job can return values that will be stored in Redis as JSON
-    // // This return value is unused in this demo application.
-    // return { value: "This will be stored" };
-
     const browser = await playwright.chromium.launch();
     const page = await browser.newPage();
 
     await page.goto(job.data.url);
 
-    const inStock = await page.$('#add-to-cart-button');
+    // Checks stock using selector for add to cart button
+    const inStock = !!(await page.$(job.data.selector));
 
     await browser.close();
 
     job.progress(100);
-    job.moveToCompleted(inStock);
-
-    // return { value: inStock };
+    return { inStock: inStock };
   });
 }
 
