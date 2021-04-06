@@ -1,5 +1,8 @@
 {
     "addons": [
         "heroku-redis"
+    ],
+    "buildpacks": [
+        { "url": "heroku/google-chrome" }
     ]
 }
