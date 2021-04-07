@@ -1,6 +1,6 @@
 const throng = require('throng');
 const Queue = require('bull');
-const { chromium } = require("playwright-chromium");
+const { chromium } = require('playwright-chromium');
 
 // Connect to a local redis instance locally, and the Heroku-provided URL in production
 const REDIS_URL = process.env.HEROKU_REDIS_PINK_URL || 'redis://127.0.0.1:6379';
@@ -20,9 +20,16 @@ function start () {
 
   workQueue.process(maxJobsPerWorker, async (job) => {
     const browser = await chromium.launch({ chromiumSandbox: false });
-    const page = await browser.newPage();
+    const page = await browser.newPage({
+      viewport: {
+        width: 1920,
+        height: 1080
+      }
+    });
 
-    await page.goto(job.data.url);
+    await page.goto(job.data.url, {
+      timeout: 15000
+    });
 
     // Checks stock using selector for add to cart button
     const inStock = !!(await page.$(job.data.selector));
