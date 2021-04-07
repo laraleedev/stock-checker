@@ -32,12 +32,12 @@ function start () {
     });
 
     // Checks stock using selector for add to cart button
-    const inStock = !!(await page.$(job.data.selector));
+    const inStock = await page.$(job.data.selector);
 
     await browser.close();
 
     job.progress(100);
-    return { inStock: inStock };
+    return { inStock: !!inStock };
   });
 }
 

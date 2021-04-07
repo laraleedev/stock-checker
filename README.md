@@ -15,6 +15,9 @@ npm run start
 ```
 http://localhost:5000/
 
+#### API test
+curl -d '{"name": "3080 Asus TUF OC","selector": "#add-to-cart-button","url": "https://www.amazon.com/ASUS-GeForce-Graphics-DisplayPort-Bearings/dp/B08HH5WF97"}' -H "Content-Type: application/json" -X POST http://localhost:5000/job
+
 ### Heroku
 ```
 git push heroku main // deploy commited code to heroku
