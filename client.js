@@ -72,6 +72,10 @@ async function addJob (data) {
 // Fetch updates for each job
 async function updateJobs () {
   for (const id of Object.keys(jobs)) {
+    if (jobs[id].state === "completed" || jobs[id].state === "failed" ) {
+      continue;
+    };
+
     const res = await fetch(`/job/${id}`);
     const resJson = await res.json();
     if (jobs[id]) {
@@ -115,8 +119,6 @@ function renderJob (job) {
     progress = 100;
   }
 
-  console.log('job ', job);
-
   return document.querySelector('#job-template')
     .innerHTML
     .replace('{{id}}', job.id)
@@ -131,5 +133,5 @@ window.onload = function () {
   document.querySelector('#add-job').addEventListener('click', addJob);
   document.querySelector('#clear').addEventListener('click', clear);
 
-  setInterval(updateJobs, 200);
+  setInterval(updateJobs, 1000);
 };

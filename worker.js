@@ -28,7 +28,7 @@ function start () {
     });
 
     await page.goto(job.data.url, {
-      timeout: 15000
+      timeout: 25000
     });
 
     // Checks stock using selector for add to cart button
