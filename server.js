@@ -29,17 +29,17 @@ app.get('/job/:id', async (req, res) => {
   if (job === null) {
     res.status(404).end();
   } else {
-    const state = await job.getState();
+    const jobstate = await job.getState();
     const progress = job._progress;
     const reason = job.failedReason;
     const returnvalue = job.returnvalue;
-    res.json({ id, state, progress, reason, result: returnvalue });
+    res.json({ id, jobstate, progress, reason, result: returnvalue });
   }
 });
 
 // You can listen to global events to get notified when jobs are processed
 workQueue.on('global:completed', (jobId, result) => {
-  console.log(`Job completed with result ${result.inStock ? 'In stock' : 'Out of stock'}`);
+  console.log(`Job completed with result ${result}`);
 });
 
 app.listen(PORT, () => console.log('Server started!'));

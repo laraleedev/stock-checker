@@ -15,10 +15,19 @@ const workers = process.env.WEB_CONCURRENCY || 1;
 // to be much lower.
 const maxJobsPerWorker = 50;
 
+const siteData = {
+  amazon: {
+    stockSelector: '#add-to-cart-button',
+    badLinkSelector: '#g img'
+  },
+  bestbuy: {}
+}
+
 function start () {
   const workQueue = new Queue('work', REDIS_URL, { settings: { lockDuration: 30000 } }); // Connect to the named work queue
 
   workQueue.process(maxJobsPerWorker, async (job) => {
+    const siteType = new URL(job.data.url).host.split(".")[1];
     const browser = await chromium.launch({ chromiumSandbox: false });
     const page = await browser.newPage({
       viewport: {
@@ -26,18 +35,26 @@ function start () {
         height: 1080
       }
     });
+    let inStock;
 
     await page.goto(job.data.url, {
       timeout: 25000
     });
 
+    // Checks if the link is bad by checking for bad link error
+    const badPage = await page.$(siteData[siteType].badLinkSelector);
     // Checks stock using selector for add to cart button
-    const inStock = await page.$(job.data.selector);
+
+    if (!badPage) {
+      const stockCheck = await page.$(siteData[siteType].stockSelector);
+
+      inStock = stockCheck ? "instock" : "outofstock";
+    }
 
     await browser.close();
 
     job.progress(100);
-    return { inStock: !!inStock };
+    return inStock || "checkUrl";
   });
 }
 
